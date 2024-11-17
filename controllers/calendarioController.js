@@ -5,7 +5,7 @@ exports.createEvent = async (req, res) => {
   const { title, start, end, allDay, userId } = req.body;
   try {
     const [result] = await pool.query(
-      'INSERT INTO calendario (title, start, end, allDay, userId) VALUES (?, ?, ?, ?, ?)',
+      'INSERT INTO Calendario (title, start, end, allDay, userId) VALUES (?, ?, ?, ?, ?)',
       [title, start, end, allDay, userId]
     );
     console.log(`Evento creado: ${JSON.stringify(req.body)}`);
@@ -16,12 +16,14 @@ exports.createEvent = async (req, res) => {
   }
 };
 
-// Obtener todos los eventos
+//Obtener todos los eventos
 exports.getEvents = async (req, res) => {
   const { userId } = req.query;
+  if (!userId) {
+    return res.status(400).json({ message: 'UserId es requerido' });
+  }
   try {
-    const [rows] = await pool.query('SELECT * FROM calendario WHERE userId = ?', [userId]);
-    console.log(`Eventos obtenidos para userId ${userId}: ${JSON.stringify(rows)}`);
+    const [rows] = await pool.query('SELECT * FROM Calendario WHERE userId = ?', [userId]);
     res.status(200).json(rows);
   } catch (error) {
     console.error('Error al obtener los eventos:', error);
@@ -29,11 +31,12 @@ exports.getEvents = async (req, res) => {
   }
 };
 
+
 // Obtener evento por ID
 exports.getEventById = async (req, res) => {
   const { id } = req.params;
   try {
-    const [rows] = await pool.query('SELECT * FROM calendario WHERE id = ?', [id]);
+    const [rows] = await pool.query('SELECT * FROM Calendario WHERE id = ?', [id]);
     if (rows.length === 0) {
       console.log(`Evento no encontrado para id: ${id}`);
       return res.status(404).json({ message: 'Evento no encontrado' });
@@ -52,7 +55,7 @@ exports.updateEvent = async (req, res) => {
   const { title, start, end, allDay } = req.body;
   try {
     const [result] = await pool.query(
-      'UPDATE calendario SET title = ?, start = ?, end = ?, allDay = ? WHERE id = ?',
+      'UPDATE Calendario SET title = ?, start = ?, end = ?, allDay = ? WHERE id = ?',
       [title, start, end, allDay, id]
     );
     if (result.affectedRows === 0) {
@@ -71,7 +74,7 @@ exports.updateEvent = async (req, res) => {
 exports.deleteEvent = async (req, res) => {
   const { id } = req.params;
   try {
-    const [result] = await pool.query('DELETE FROM calendario WHERE id = ?', [id]);
+    const [result] = await pool.query('DELETE FROM Calendario WHERE id = ?', [id]);
     if (result.affectedRows === 0) {
       console.log(`Evento no encontrado para eliminar id: ${id}`);
       return res.status(404).json({ message: 'Evento no encontrado' });
