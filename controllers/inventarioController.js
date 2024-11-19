@@ -27,11 +27,14 @@ exports.getBodegaById = async (req, res) => {
 
 // Crear una nueva bodega
 exports.createBodega = async (req, res) => {
-    const { nombre_bodega, fecha_inventario, detalle_inventario } = req.body;
+    const { nombre_bodega, fecha_inventario, detalle_inventario, responsable } = req.body; // Incluye responsable
     try {
-        const [results] = await pool.query('INSERT INTO InventarioBodegas (nombre_bodega, fecha_inventario, detalle_inventario) VALUES (?, ?, ?)', [nombre_bodega, fecha_inventario, detalle_inventario]);
-        console.log('Nueva bodega creada:', { id: results.insertId, nombre_bodega, fecha_inventario, detalle_inventario });
-        res.status(201).json({ id: results.insertId, nombre_bodega, fecha_inventario, detalle_inventario });
+        const [results] = await pool.query(
+            'INSERT INTO InventarioBodegas (nombre_bodega, fecha_inventario, detalle_inventario, responsable) VALUES (?, ?, ?, ?)', 
+            [nombre_bodega, fecha_inventario, detalle_inventario, responsable] // Asegúrate de pasar responsable
+        );
+        console.log('Nueva bodega creada:', { id: results.insertId, nombre_bodega, fecha_inventario, detalle_inventario, responsable });
+        res.status(201).json({ id: results.insertId, nombre_bodega, fecha_inventario, detalle_inventario, responsable });
     } catch (err) {
         console.error('Error al crear una nueva bodega:', err);
         return res.status(500).send(err);
@@ -41,10 +44,13 @@ exports.createBodega = async (req, res) => {
 // Actualizar una bodega existente
 exports.updateBodega = async (req, res) => {
     const { id } = req.params;
-    const { nombre_bodega, fecha_inventario, detalle_inventario } = req.body;
+    const { nombre_bodega, fecha_inventario, detalle_inventario, responsable } = req.body; // Incluye responsable
     try {
-        await pool.query('UPDATE InventarioBodegas SET nombre_bodega = ?, fecha_inventario = ?, detalle_inventario = ? WHERE id = ?', [nombre_bodega, fecha_inventario, detalle_inventario, id]);
-        console.log(`Bodega con ID ${id} actualizada:`, { nombre_bodega, fecha_inventario, detalle_inventario });
+        await pool.query(
+            'UPDATE InventarioBodegas SET nombre_bodega = ?, fecha_inventario = ?, detalle_inventario = ?, responsable = ? WHERE id = ?', 
+            [nombre_bodega, fecha_inventario, detalle_inventario, responsable, id] // Asegúrate de pasar responsable
+        );
+        console.log(`Bodega con ID ${id} actualizada:`, { nombre_bodega, fecha_inventario, detalle_inventario, responsable });
         res.status(204).send();
     } catch (err) {
         console.error(`Error al actualizar la bodega con ID ${id}:`, err);
