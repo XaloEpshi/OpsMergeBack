@@ -12,7 +12,7 @@ const calendarioRoutes = require('./routes/calendarioRoutes');
 const activitiesRoutes = require('./routes/activitiesRoutes');
 
 const app = express();
-const port = process.env.PORT || 3001; // Usar variable de entorno o puerto por defecto
+const port = process.env.PORT || 3001;
 
 // Middleware para parsear JSON
 app.use(express.json()); 
