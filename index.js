@@ -10,10 +10,11 @@ const exportacionesRoutes = require('./routes/exportacionesRoutes');
 const calendarioRoutes = require('./routes/calendarioRoutes');
 const activitiesRoutes = require('./routes/activitiesRoutes');
 
-
 const app = express();
 const port = process.env.PORT || 3001;
-app.listen(port, () => {
+
+// Configuración del servidor para escuchar en 0.0.0.0
+const server = app.listen(port, '0.0.0.0', () => {
   console.log(`Servidor corriendo en el puerto ${port}`);
 });
 
@@ -46,10 +47,6 @@ app.get('/test', (req, res) => {
 });
 
 // Configuración del servidor WebSocket
-const server = app.listen(port, '0.0.0.0', () => {
-  console.log(`Servidor corriendo en el puerto ${port}`);
-});
-
 const wss = new WebSocketServer({ server });
 
 wss.on('connection', (ws) => {
