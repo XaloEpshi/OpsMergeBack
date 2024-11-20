@@ -1,4 +1,3 @@
-require('dotenv').config(); // Cargar variables de entorno
 const express = require('express');
 const cors = require('cors');
 const { WebSocketServer } = require('ws');
@@ -12,24 +11,10 @@ const calendarioRoutes = require('./routes/calendarioRoutes');
 const activitiesRoutes = require('./routes/activitiesRoutes');
 
 const app = express();
-const port = process.env.PORT || 3001;
+const port = process.env.PORT || 3001; // Usar variable de entorno o puerto por defecto
 
-// Middleware para parsear JSON
 app.use(express.json()); 
-
-// Configuración de CORS
-const allowedOrigins = process.env.ALLOWED_ORIGINS.split(',');
-const corsOptions = {
-  origin: (origin, callback) => {
-    if (allowedOrigins.includes(origin) || !origin) {
-      callback(null, true);
-    } else {
-      callback(new Error('Not allowed by CORS'));
-    }
-  }
-};
-
-app.use(cors(corsOptions));
+app.use(cors());
 
 // Probar la conexión a la base de datos
 pool.getConnection()
@@ -51,6 +36,11 @@ app.use('/api/exportaciones', exportacionesRoutes);
 app.use('/api/calendario', calendarioRoutes); 
 app.use('/api/activities', activitiesRoutes);
 
+// Ruta de prueba para verificar que el servidor está funcionando
+app.get('/test', (req, res) => {
+  res.send('El servidor está funcionando correctamente!');
+});
+
 // Configuración del servidor WebSocket
 const server = app.listen(port, () => {
   console.log(`Servidor corriendo en el puerto ${port}`);
@@ -61,17 +51,14 @@ const wss = new WebSocketServer({ server });
 wss.on('connection', (ws) => {
   console.log('Nuevo cliente conectado');
 
-  // Evento cuando se recibe un mensaje del cliente
   ws.on('message', (message) => {
     console.log('Mensaje recibido del cliente:', message);
     ws.send('Mensaje recibido por el servidor');
   });
 
-  // Evento cuando se cierra la conexión
   ws.on('close', () => {
     console.log('Cliente desconectado');
   });
 });
 
 module.exports = app;
-
