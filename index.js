@@ -12,7 +12,7 @@ const activitiesRoutes = require('./routes/activitiesRoutes');
 
 
 const app = express();
-const port = process.env.PORT || 3001; // Usar variable de entorno o puerto por defecto
+const port = process.env.PORT || 19268; // Usar variable de entorno o puerto por defecto
 
 app.use(express.json()); 
 app.use(cors());
