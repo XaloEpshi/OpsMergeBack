@@ -2,8 +2,6 @@ const mysql = require('mysql2/promise');
 require('dotenv').config();
 
 const pool = mysql.createPool({
-  host: 'autorack.proxy.rlwy.net',
-  port: 26447,
   user: process.env.MYSQLUSER,
   password: process.env.MYSQLPASSWORD,
   database: process.env.MYSQLDATABASE,
@@ -13,3 +11,6 @@ const pool = mysql.createPool({
 });
 
 module.exports = pool;
+
+
+//mysql://root:QtrjWlEVxobLQhJngIgRyCmucGOSRKMk@junction.proxy.rlwy.net:19268/railway
