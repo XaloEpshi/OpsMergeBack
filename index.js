@@ -13,6 +13,7 @@ const activitiesRoutes = require('./routes/activitiesRoutes');
 const app = express();
 const port = process.env.PORT || 3001; // Usar variable de entorno o puerto por defecto
 
+
 app.use(express.json()); 
 app.use(cors());
 
@@ -26,6 +27,7 @@ pool.getConnection()
     console.error("Error al conectar a la base de datos:", err.message);
     process.exit(1); // Termina el proceso si no puede conectarse a la base de datos
   });
+  
 
 // Rutas
 app.use('/api/agenda', agendaRoutes); 
