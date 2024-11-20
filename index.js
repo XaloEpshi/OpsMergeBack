@@ -12,9 +12,7 @@ const activitiesRoutes = require('./routes/activitiesRoutes');
 
 const app = express();
 const port = process.env.PORT || 3001; // Usar variable de entorno o puerto por defecto
-app.listen(port, '0.0.0.0', () => {
-  console.log(`Servidor corriendo en el puerto ${port}`);
-});
+
 
 
 app.use(express.json()); 
