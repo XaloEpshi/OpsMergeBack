@@ -18,7 +18,7 @@ const port = process.env.PORT || 3001; // Usar variable de entorno o puerto por 
 app.use(express.json()); 
 
 // Configuración de CORS
-const allowedOrigins = process.env.ALLOWED_ORIGINS.split(','); // Leer de las variables de entorno
+const allowedOrigins = process.env.ALLOWED_ORIGINS.split(',');
 const corsOptions = {
   origin: (origin, callback) => {
     if (allowedOrigins.includes(origin) || !origin) {
@@ -51,12 +51,11 @@ app.use('/api/exportaciones', exportacionesRoutes);
 app.use('/api/calendario', calendarioRoutes); 
 app.use('/api/activities', activitiesRoutes);
 
-// Iniciar el servidor HTTP solo si la conexión a la base de datos es exitosa
+// Configuración del servidor WebSocket
 const server = app.listen(port, () => {
   console.log(`Servidor corriendo en el puerto ${port}`);
 });
 
-// Configuración del servidor WebSocket
 const wss = new WebSocketServer({ server });
 
 wss.on('connection', (ws) => {
@@ -73,3 +72,6 @@ wss.on('connection', (ws) => {
     console.log('Cliente desconectado');
   });
 });
+
+module.exports = app;
+
