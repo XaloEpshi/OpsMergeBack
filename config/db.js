@@ -14,5 +14,5 @@ const pool = mysql.createPool({
 
 module.exports = pool;
 
-
-//mysql://root:QtrjWlEVxobLQhJngIgRyCmucGOSRKMk@junction.proxy.rlwy.net:19268/railway
+//Conexion a base de datos Railway
+//root:sJjvfKBeOxfXbdEoBzewyhcaPjMOsmLO@autorack.proxy.rlwy.net:45823/railway
