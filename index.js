@@ -10,13 +10,8 @@ const exportacionesRoutes = require('./routes/exportacionesRoutes');
 const calendarioRoutes = require('./routes/calendarioRoutes');
 const activitiesRoutes = require('./routes/activitiesRoutes');
 
-
 const app = express();
-const port = process.env.PORT || 3002;
-app.listen(port, () => {
-  console.log(`Servidor corriendo en el puerto ${port}`);
-});
-
+const port = process.env.PORT || 3001;
 app.use(express.json()); 
 app.use(cors());
 
@@ -45,7 +40,7 @@ app.get('/test', (req, res) => {
   res.send('El servidor está funcionando correctamente!');
 });
 
-// Configuración del servidor WebSocket
+// Configuración del servidor WebSocket utilizando el servidor ya existente
 const server = app.listen(port, '0.0.0.0', () => {
   console.log(`Servidor corriendo en el puerto ${port}`);
 });
