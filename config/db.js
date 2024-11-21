@@ -15,5 +15,4 @@ const pool = mysql.createPool({
 module.exports = pool;
 
 
-
 //mysql://root:QtrjWlEVxobLQhJngIgRyCmucGOSRKMk@junction.proxy.rlwy.net:19268/railway
