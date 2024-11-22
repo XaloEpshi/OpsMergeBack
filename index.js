@@ -12,11 +12,11 @@ const activitiesRoutes = require('./routes/activitiesRoutes');
 
 const app = express();
 const port = process.env.PORT || 3001;
-app.use(express.json()); 
+app.use(express.json());
 
-// Configura CORS para permitir solicitudes desde tu dominio de front-end
+// Configura CORS para permitir solicitudes desde tu dominio de front-end y localhost
 const corsOptions = {
-  origin: 'https://opsmerge-9458c.web.app',
+  origin: ['https://opsmerge-9458c.web.app', 'http://localhost:3000'], // Permitir localhost para desarrollo local
   optionsSuccessStatus: 200 // Para compatibilidad con navegadores legacy
 };
 
