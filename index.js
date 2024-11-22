@@ -13,7 +13,14 @@ const activitiesRoutes = require('./routes/activitiesRoutes');
 const app = express();
 const port = process.env.PORT || 3001;
 app.use(express.json()); 
-app.use(cors());
+
+// Configura CORS para permitir solicitudes desde tu dominio de front-end
+const corsOptions = {
+  origin: 'https://opsmerge-9458c.web.app',
+  optionsSuccessStatus: 200 // Para compatibilidad con navegadores legacy
+};
+
+app.use(cors(corsOptions));
 
 // Probar la conexión a la base de datos
 pool.getConnection()
