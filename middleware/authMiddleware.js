@@ -1,9 +1,9 @@
 const admin = require('firebase-admin');
-const { auth } = require('../config/firebase'); // Si ya tienes tu configuración de Firebase
+const { auth } = require('../config/firebase'); 
 
-// Asegúrate de inicializar Firebase Admin SDK en tu archivo de configuración.
+
 admin.initializeApp({
-  credential: admin.credential.applicationDefault(), // o usa otro método de autenticación para producción
+  credential: admin.credential.applicationDefault(), 
 });
 
 const verifyAuth = (req, res, next) => {
